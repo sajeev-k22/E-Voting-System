@@ -1,0 +1,49 @@
+CREATE DATABASE voting_db;
+
+USE voting_db;
+
+
+CREATE TABLE voters (
+    aadhar_number VARCHAR(144) PRIMARY KEY,  -- 12 digits + 2 spaces = 14 characters
+    dob DATE,
+    region VARCHAR(100),
+    hasVoted BOOLEAN DEFAULT FALSE
+);
+
+
+INSERT INTO voters (aadhar_number, dob, region, hasVoted)
+VALUES
+('4069 7001 3353','2004-06-07','region1',FALSE),
+('4377 8674 0746','2004-06-30','region1',FALSE),
+('4214 3687 8392','2004-11-22','region1',FALSE),
+('2811 1705 8588','2004-12-19','region1',FALSE);
+
+CREATE TABLE candidates (
+    candidate_id INT AUTO_INCREMENT PRIMARY KEY,
+    candidate_name VARCHAR(255)
+);
+
+INSERT INTO candidates (candidate_name) VALUES ('Candidate_A');
+INSERT INTO candidates (candidate_name) VALUES ('Candidate_B');
+INSERT INTO candidates (candidate_name) VALUES ('Candidate_C');
+
+
+SELECT * FROM voters where aadhar_number = '4069 7001 3353';
+
+
+
+CREATE TABLE votes (
+    vote_id INT AUTO_INCREMENT PRIMARY KEY,
+    aadhar_number VARCHAR(144),
+    candidate_id INT,
+    FOREIGN KEY (aadhar_number) REFERENCES voters(aadhar_number),
+    FOREIGN KEY (candidate_id) REFERENCES candidates(candidate_id)
+);
+
+DROP TABLE candidates;
+DELETE FROM candidates WHERE candidate_id = 1;
+DROP TABLE voters;
+DROP TABLE votes;
+
+SET GLOBAL wait_timeout = 600;
+SET GLOBAL max_allowed_packet = 67108864;

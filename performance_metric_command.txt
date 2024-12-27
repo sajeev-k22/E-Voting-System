@@ -1,0 +1,3 @@
+sudo tcset enp0s3 --loss 1%
+tcshow enp0s3
+sudo tcdel enp0s3 --all
