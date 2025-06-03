@@ -7,6 +7,7 @@ This project is a simulation of an Electronic Voting System using a TCP-based cl
 📁 Project Structure
 
 E-Voting-System/
+
 ├── client.py                     # TCP client that allows a user to vote
 
 ├── server.py                     # Performance testing client to simulate vote submission
