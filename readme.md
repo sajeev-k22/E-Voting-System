@@ -8,9 +8,13 @@ This project is a simulation of an Electronic Voting System using a TCP-based cl
 
 E-Voting-System/
 ├── client.py                     # TCP client that allows a user to vote
+
 ├── server.py                     # Performance testing client to simulate vote submission
+
 ├── database.txt                  # SQL script to create and populate voting database
+
 ├── performance_metric_command.txt  # Network emulation commands using tcconfig
+
 ├── voting_performance_metrics.csv # Output CSV storing latency & RTT (auto-generated)
 
 ----------------------------------------
