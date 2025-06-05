@@ -49,7 +49,7 @@ def start_client(server_ip, server_port):
     finally:
         print("Disconnected from the server.")
 
-if name == "__main__":
-    SERVER_IP = "10.12.225.229"  # Replace with the server's IP address if different 
-    SERVER_PORT = 12345           # Must match the server's VOTING_PORT 
+if __name__ == "__main__":
+    SERVER_IP = "127.0.0.1"  # Replace with the server's IP address if different 
+    SERVER_PORT = 23415           # Must match the server's VOTING_PORT 
     start_client(SERVER_IP, SERVER_PORT)

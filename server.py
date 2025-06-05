@@ -4,11 +4,12 @@ import datetime
 import csv
 import threading
 import logging
+import mysql.connector
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-VOTING_SERVER_ADDRESS = ("127.0.0.1", 12345)
+VOTING_SERVER_ADDRESS = ("127.0.0.1", 23415)
 
 performance_data = []  # Store performance data for each request
 
@@ -106,9 +107,44 @@ def save_performance_data():
     except Exception as e:
         logging.error(f"Error saving performance data: {e}")
 
-if name == "main":
+def start_server():
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind(VOTING_SERVER_ADDRESS)
+    server.listen(5)
+    logging.info(f"Server started on {VOTING_SERVER_ADDRESS}")
+
+    while True:
+        client_socket, client_address = server.accept()
+        logging.info(f"New connection from {client_address}")
+        client_thread = threading.Thread(target=handle_client, args=(client_socket,))
+        client_thread.start()
+
+def handle_client(client_socket):
     try:
-        make_requests()
+        # Send Aadhar prompt
+        client_socket.send("Enter your Aadhar number: ".encode())
+        aadhar = client_socket.recv(1024).decode().strip()
+
+        # Send DOB prompt
+        client_socket.send("Enter your date of birth (YYYY-MM-DD): ".encode())
+        dob = client_socket.recv(1024).decode().strip()
+
+        # Send candidate choice prompt
+        client_socket.send("Enter candidate ID (1-3): ".encode())
+        choice = client_socket.recv(1024).decode().strip()
+
+        # Here you would validate and process the vote
+        # For now, just send a confirmation
+        client_socket.send("Vote recorded successfully!\n".encode())
+
+    except Exception as e:
+        logging.error(f"Error handling client: {e}")
+    finally:
+        client_socket.close()
+
+if __name__ == "__main__":
+    try:
+        start_server()
     except KeyboardInterrupt:
-        logging.info("Program interrupted by user. Saving final performance data...")
+        logging.info("Server shutting down...")
         save_performance_data()
