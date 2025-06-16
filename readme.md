@@ -32,7 +32,7 @@ E-Voting-System/
 🧰 Setup Instructions
 
 1. Clone the Repository
-    git clone https://github.com/yourusername/E-Voting-System.git
+    git clone https://github.com/sajeev-k22/E-Voting-System.git
     cd E-Voting-System
 
 2. MySQL Database Setup
